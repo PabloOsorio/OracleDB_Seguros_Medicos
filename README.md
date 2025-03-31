@@ -1,4 +1,4 @@
-Proyecto de Base de Datos en Oracle SQL
+# Proyecto de Base de Datos en Oracle SQL
 
 Este proyecto consiste en la creación, gestión y análisis de una base de datos de seguros médicos utilizando **Oracle Database**. La creacion de la estructura de las tablas fue propuesta por mi y por nociones acerca de como se grestionaria la arquitectura de la misma y los datos en las tablas fueron randoms aun que bien formulados para que tuviera sentido.
 
