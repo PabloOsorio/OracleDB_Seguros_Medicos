@@ -87,6 +87,7 @@ En esta arquitectura el usuario tiene una CDB (Container database) que puede con
 
 **Comandos utiles**
 
+SET AUTOCOMMIT ON; Solo si quieres activar el auto commit igual, cuestion de gustos.
 SELECT * FROM v$version; --> te ayuda a conocer la version de Oracle Database que tienes.
 SELECT username from dba_users; ---> Te muestra todos los usuarios creados en la base de datos.
 SELECT sid, serial#, username, status FROM v$session WHERE username IS NOT NULL; ---> Lista las sesiones activas en la base de datos.
@@ -95,4 +96,37 @@ SHOW con_name; ---> Muestra el nombre de la PDB a la que actualmente estas conec
 ALTER SESSION SET CONTAINER = "Nombre de PDB" ---> Cambia tu sesion actual para conectarte a la PDB que indiques.
 SELECT name, open_mode, restricted FROM v$pdbs; --> Muestra si las PDBS estan en modo restringido(Solo los administradores pueden acceder a ellas) o abiertas.
 SELECT name, cdb FROM v$database; ---> Devuelve el nombre de la base de datos y un indicador para saber si estas en una CDB o una base de datos no multitenant.
-V$ --> Vistas importantes para monitorear y administrar Oracla Database, no son tablas fisicas, sino vistas de rendimiento en memoria. 
+V$ --> Vistas importantes para monitorear y administrar Oracla Database, no son tablas fisicas, sino vistas de rendimiento en memoria.
+
+## PL/SQL (Procedural language / Structured Query Language) 
+
+Este es el **lenguaje de programacion procedural de Oracle que amplia los usos de SQL.**
+SQL ---> Enfocado a la manipulacion de datos.
+PL/SQL --> Permite crear bloques de codigo con logica de programacion(condicionales, bucles, excepciones, procedimientos y funciones).
+
+### Estructura basica de un bloque PL/SQL.
+
+**DECLARE**
+Declaracion 
+de 
+variables
+**BEGIN**
+Bloque
+de
+ejecucion.
+*EXCEPTION*
+Manejo
+de
+errores.
+**END**;
+
+### "Hola Mundo" con PL/SQL
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('Hola, mundo desde PL/SQL :D);
+END;
+/
+
+DBMS_OUTPUT.PUT_LINE --> Es una funcion que imprime mensajes en consola 
+y recuerda habilitar la salida para que se muestre el mensaje en consola
+SET SERVEROUTPUT ON;
