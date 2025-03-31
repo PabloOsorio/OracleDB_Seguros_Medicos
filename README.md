@@ -38,7 +38,7 @@ Se exportaron los datos a archivos CSV desde **SQL Developer** usando la opción
 
 ---
 
-## 🚀 **Cómo Ejecutar el Proyecto**
+## **Cómo Ejecutar el Proyecto**
 1. Conéctate a tu instancia de **Oracle Database**.
 2. Ejecuta los scripts SQL de creación de tablas y carga de datos.
 3. Utiliza SQL Developer para realizar consultas o exportar a CSV.
