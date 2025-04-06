@@ -70,6 +70,10 @@ La existencia de usuarios separados como **SYS** y **SYSTEM** ofrece varios bene
 
 - Oracle introduce un conceptoo llamado Multitenant Architecture que es una diferencia muy marcada respecto a los otros gestores de bases de datos relacionales(MySQL, PostgreSQl,ETC.)
 En esta arquitectura el usuario tiene una CDB (Container database) que puede contener multiples PDBs(Pluggable Database).
+- Ademas los usuarios que se crean en Oracle son distintos a los de MySQl o PostgreSQl al crear un usuario tambien se creo un esquema con el mismo nombre, el cual es un espacio logico donde se guardaran tablas, vistas, todo lo que este usuario cree. Por ejemplo si quieres hacer un modelo dimensional de tu PDB solo es necesario crear un nuevo usuario y desde ahi empezar a modelarlo para despues insertar los datos de tu esquema relacional (normalizado). Como dato importante dichos esquemas se pueden comunicar entre si, pero por defecto entre esquemas no pueden ver nada que no sea creacion suya (como se resuelve esto pues le das permisos).
+- **Entonces que debes hacer al entrar por primera vez a Oracle** Primero entras como system ya que SYS es delicado y gestiona todo el CDB ( Solo no entre como SYS), una vez dentro como system buscas la PDB accedes a ella y creas un nuevo usuario el cual vendra con su esquema y ahora si puedes trabajar en tu PDB recuerda cambiar de usuario iniciando una nueva sesion con ese nombre, recuerda que como usuario resien creado no puedes ver tablas de otros, hacer consultas fuera de su esquema, crear obejtos,(si no tiene RESOURCE), usar conexiones si no tiene connect. Recuerda desde system puedes darle estos permisos a tu usuario recien creado.
+- Algunos permisos mas comunes son CONNECT(Permite que el usuario pueda conectarse a la base de datos, obligatorio si quieres que el usuario pueda iniciar sesion) y RESOURCE(Permite que el usuario pueda crear objetos como tablas, vistas, etc) esencial si quieres que tu usuario pueda modelar su base de datos 
+- Por lo general lo ideal es crar asi al usuario CREATE USER seguros_medicos IDENTIFIED BY tu_contraseña DEFAULT TABLESPACE users TEMPORARY TABLESPACE temp QUOTA UNLIMITED ON users; CREAS AL USUARIO, LE DAS PERMISO A GUARDAR OBJETOS, LE DAS PERMISO PARA ACCEDER A OPERACIONES TEMPORALES, LE DAS ESPACIO ILIMITADO EN EL TABLESPACE USERS
 
 ### CBD (Container database)
 
@@ -87,22 +91,22 @@ En esta arquitectura el usuario tiene una CDB (Container database) que puede con
 
 **Comandos utiles**
 
-SET AUTOCOMMIT ON; Solo si quieres activar el auto commit igual, cuestion de gustos.
-SELECT * FROM v$version; --> te ayuda a conocer la version de Oracle Database que tienes.
-SELECT username from dba_users; ---> Te muestra todos los usuarios creados en la base de datos.
-SELECT sid, serial#, username, status FROM v$session WHERE username IS NOT NULL; ---> Lista las sesiones activas en la base de datos.
-SELECT name, open_mode FROM v$pdbs; ---> Muestra las PDBs(Bases de datos enchufables) dentro de la CDB.
-SHOW con_name; ---> Muestra el nombre de la PDB a la que actualmente estas conectado.
-ALTER SESSION SET CONTAINER = "Nombre de PDB" ---> Cambia tu sesion actual para conectarte a la PDB que indiques.
-SELECT name, open_mode, restricted FROM v$pdbs; --> Muestra si las PDBS estan en modo restringido(Solo los administradores pueden acceder a ellas) o abiertas.
-SELECT name, cdb FROM v$database; ---> Devuelve el nombre de la base de datos y un indicador para saber si estas en una CDB o una base de datos no multitenant.
-V$ --> Vistas importantes para monitorear y administrar Oracla Database, no son tablas fisicas, sino vistas de rendimiento en memoria.
+- SET AUTOCOMMIT ON; Solo si quieres activar el auto commit igual, cuestion de gustos.
+- SELECT * FROM v$version; --> te ayuda a conocer la version de Oracle Database que tienes.
+- SELECT username from dba_users; ---> Te muestra todos los usuarios creados en la base de datos.
+- SELECT sid, serial#, username, status FROM v$session WHERE username IS NOT NULL; ---> Lista las sesiones activas en la base de datos.
+- SELECT name, open_mode FROM v$pdbs; ---> Muestra las PDBs(Bases de datos enchufables) dentro de la CDB.
+- SHOW con_name; ---> Muestra el nombre de la PDB a la que actualmente estas conectado.
+- ALTER SESSION SET CONTAINER = "Nombre de PDB" ---> Cambia tu sesion actual para conectarte a la PDB que indiques.
+- SELECT name, open_mode, restricted FROM v$pdbs; --> Muestra si las PDBS estan en modo restringido(Solo los administradores pueden acceder a ellas) o abiertas.
+- SELECT name, cdb FROM v$database; ---> Devuelve el nombre de la base de datos y un indicador para saber si estas en una CDB o una base de datos no multitenant.
+- V$ --> Vistas importantes para monitorear y administrar Oracla Database, no son tablas fisicas, sino vistas de rendimiento en memoria.
 
 ## PL/SQL (Procedural language / Structured Query Language) 
 
 Este es el **lenguaje de programacion procedural de Oracle que amplia los usos de SQL.**
-SQL ---> Enfocado a la manipulacion de datos.
-PL/SQL --> Permite crear bloques de codigo con logica de programacion(condicionales, bucles, excepciones, procedimientos y funciones).
+- SQL ---> Enfocado a la manipulacion de datos.
+- PL/SQL --> Permite crear bloques de codigo con logica de programacion(condicionales, bucles, excepciones, procedimientos y funciones).
 
 ### Estructura basica de un bloque PL/SQL.
 
